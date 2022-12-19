@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MoreThan, Repository } from 'typeorm';
 import EventEntity from '../../model/event.entity';
@@ -12,8 +12,13 @@ export class EventService {
   constructor(
     @InjectRepository(EventEntity)
     private readonly eventRepo: Repository<EventEntity>,
+    @Inject(forwardRef(() => WorkshopService))
     private readonly workshopService: WorkshopService,
   ) {}
+
+  public async findOneByEventId(eventId: number): Promise<EventEntity> {
+    return await this.eventRepo.findOne({ where: { id: eventId } });
+  }
 
   public async getAllActiveEvent(current_page: number, per_page: number) {
     try {
@@ -52,9 +57,7 @@ export class EventService {
 
   public async getSingleEventInfo(eventId: number) {
     try {
-      const event: EventEntity = await this.eventRepo.findOne({
-        where: { id: eventId },
-      });
+      const event: EventEntity = await this.findOneByEventId(eventId);
 
       const totalWorkshops: number =
         await this.workshopService.countWorkshopByEventId(eventId);
