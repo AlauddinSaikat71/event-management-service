@@ -1,12 +1,22 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiResponseProperty } from '@nestjs/swagger';
+import EventEntity from 'src/model/event.entity';
 class EventDto {
-  @ApiProperty()
+  constructor(event: EventEntity) {
+    this.id = event.id;
+    this.title = event.title;
+    this.start_at = event.start_at;
+    this.end_at = event.end_at;
+  }
+  @ApiResponseProperty()
   public id: number;
-  @ApiProperty()
+
+  @ApiResponseProperty()
   public title: string;
-  @ApiProperty()
+
+  @ApiResponseProperty()
   public start_at: Date;
-  @ApiProperty()
+
+  @ApiResponseProperty()
   public end_at: Date;
 }
 

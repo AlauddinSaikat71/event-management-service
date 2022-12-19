@@ -1,20 +1,15 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber } from 'class-validator';
+import { ApiResponseProperty } from '@nestjs/swagger';
 class PaginationDto {
-  @IsNumber()
-  @ApiProperty({ type: Number })
+  @ApiResponseProperty()
   public total: number;
 
-  @IsNumber()
-  @ApiProperty({ type: Number })
+  @ApiResponseProperty()
   public per_page: number;
 
-  @IsNumber()
-  @ApiProperty({ type: Number })
+  @ApiResponseProperty()
   public total_pages: number;
 
-  @IsNumber()
-  @ApiProperty({ type: Number })
+  @ApiResponseProperty()
   public current_page: number;
 }
 

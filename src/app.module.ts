@@ -6,6 +6,8 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { configService } from './config/config.service';
 import { EventModule } from './modules/event/event.module';
+import { ReservationModule } from './modules/reservation/reservation.module';
+import { WorkshopModule } from './modules/workshop/workshop.module';
 
 @Module({
   imports: [
@@ -15,6 +17,8 @@ import { EventModule } from './modules/event/event.module';
       global: true,
     }),
     EventModule,
+    WorkshopModule,
+    ReservationModule,
   ],
   providers: [
     { provide: APP_PIPE, useClass: EMSValidationPipe },
