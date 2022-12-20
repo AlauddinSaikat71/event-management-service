@@ -10,7 +10,8 @@ By pgAdmin login to your account and create a database.
 
 ## Environment Setup
 
-After successfull cloning create a '.env' file in root ditectory.
+After successfull cloning open the repository in a code editor.
+Create a '.env' file in root ditectory.
 Copy from the 'sample.env' & paste to '.env' file.
 
 Write the port number you want to run this app.
