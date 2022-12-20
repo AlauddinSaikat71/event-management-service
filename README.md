@@ -8,7 +8,7 @@ The app handle a Event Management service.
 Make sure that your computer has postgre database installed & pgAdmin(software).
 By pgAdmin login to your account and create a database.
 
-## Enviorment Setup
+## Environment Setup
 
 After successfull cloning create a '.env' file in root ditectory.
 Copy from the 'sample.env' & paste to '.env' file.
