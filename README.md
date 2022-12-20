@@ -56,8 +56,9 @@ $ npm run start:dev
 ## API Documentation
 
 ```bash
-# To see API documentaion click here if you don't change the port number
-http://localhost:4055/docs#/
+# To see API documentaion click here . Set the port number which you set in `.env` file
+http://localhost:PORT/docs#/
+
 
 All API Endpoints, Req Body, Query Param, and Response format have shown in the Swagger UI.
 ```
