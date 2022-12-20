@@ -9,20 +9,25 @@ class WorkshopDTO {
     this.start_at = w.start_at;
     this.end_at = w.end_at;
   }
+
+  public static fromEntity(w: WorkshopEntity) {
+    return new WorkshopDTO(w);
+  }
+
   @ApiResponseProperty()
   id: number;
-
-  @ApiResponseProperty()
-  start_at: Date;
-
-  @ApiResponseProperty()
-  end_at: Date;
 
   @ApiResponseProperty()
   title: string;
 
   @ApiResponseProperty()
   description: string;
+
+  @ApiResponseProperty()
+  start_at: Date;
+
+  @ApiResponseProperty()
+  end_at: Date;
 }
 
 export default WorkshopDTO;

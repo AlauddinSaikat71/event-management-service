@@ -7,6 +7,11 @@ class EventDto {
     this.start_at = event.start_at;
     this.end_at = event.end_at;
   }
+
+  public static fromEntity(event: EventEntity) {
+    return new EventDto(event);
+  }
+
   @ApiResponseProperty()
   public id: number;
 

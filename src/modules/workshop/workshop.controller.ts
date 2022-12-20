@@ -8,11 +8,13 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  Param,
   Query,
   UseInterceptors,
 } from '@nestjs/common';
 import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import ActiveWorkShopsResponseDTO from './dtos/active-wrokshops-response.dto';
+import { WorkshopInfoDTO } from './dtos/workshop-info.dto';
 import { WorkshopQueryDTO } from './dtos/workshop-query.dto';
 import { WorkshopService } from './workshop.service';
 
@@ -32,6 +34,16 @@ export class WorkshopController {
     const result = await this.workshopService.getActiveWorkshopsByEventId(
       query.event_id,
     );
+    return result;
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @ApiOkResponse({ type: SwaggerResponseType(WorkshopInfoDTO) })
+  @Get('/:id')
+  public async getSingleWorkshopInfo(
+    @Param('id') id: number,
+  ): Promise<WorkshopInfoDTO> {
+    const result = await this.workshopService.getSingleWorkshopInfo(id);
     return result;
   }
 }

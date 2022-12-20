@@ -12,7 +12,7 @@ class ActiveWorkShopsResponseDTO extends EventDto {
     });
   }
 
-  @ApiProperty()
+  @ApiProperty({ type: WorkshopDTO, isArray: true })
   workshops: WorkshopDTO[];
 }
 export default ActiveWorkShopsResponseDTO;
