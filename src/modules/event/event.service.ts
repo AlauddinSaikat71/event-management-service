@@ -5,7 +5,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { isNumber } from 'class-validator';
+import { isDate, isNumber } from 'class-validator';
 import { MoreThan, Repository } from 'typeorm';
 import EventEntity from '../../model/event.entity';
 import { WorkshopService } from './../workshop/workshop.service';
@@ -29,26 +29,48 @@ export class EventService {
     return await this.eventRepo.findOne({ where: { id: eventId } });
   }
 
-  public async getAllActiveEvent(current_page: number, per_page: number) {
-    const now = new Date();
-    const activeEventsCount: number = await this.eventRepo.count({
+  public async countActiveEvents(now: Date | string) {
+    now = isDate(now) ? now : new Date(now);
+    return await this.eventRepo.count({
       where: { start_at: MoreThan(now) },
     });
+  }
 
-    const activeEvents: EventEntity[] = await this.eventRepo.find({
+  public async findPaginatedActiveEvents(
+    currentPage: number | string,
+    perPage: number | string,
+    now: Date | string,
+  ) {
+    currentPage = isNumber(currentPage) ? currentPage : Number(currentPage);
+    perPage = isNumber(perPage) ? perPage : Number(perPage);
+    now = isDate(now) ? now : new Date(now);
+
+    return await this.eventRepo.find({
       where: {
         start_at: MoreThan(now),
       },
-      skip: (current_page - 1) * per_page,
-      take: per_page,
+      skip: (currentPage - 1) * perPage,
+      take: perPage,
     });
+  }
 
-    const paginationDto: PaginationDto = {
-      current_page: current_page,
-      per_page: per_page,
-      total: activeEventsCount,
-      total_pages: Math.ceil(activeEventsCount / per_page),
-    };
+  public async getAllActiveEvent(currentPage: number, perPage: number) {
+    const now = new Date();
+
+    const activeEventsCount: number = await this.countActiveEvents(now);
+
+    const activeEvents: EventEntity[] = await this.findPaginatedActiveEvents(
+      currentPage,
+      perPage,
+      now,
+    );
+
+    const paginationDto: PaginationDto = new PaginationDto(
+      currentPage,
+      perPage,
+      activeEventsCount,
+      Math.ceil(activeEventsCount / perPage),
+    );
 
     const response: ActiveEventsResponse = new ActiveEventsResponse(
       activeEvents,

@@ -25,7 +25,8 @@ export class WorkshopService {
     private readonly reservationService: ReservationService,
   ) {}
 
-  public async countWorkshopByEventId(eventId: number) {
+  public async countWorkshopByEventId(eventId: number | string) {
+    eventId = isNumber(eventId) ? eventId : Number(eventId);
     const count: number = await this.workshopRepo.count({
       where: { event_id: eventId },
     });
@@ -33,8 +34,9 @@ export class WorkshopService {
   }
 
   public async findActiveWorkshopsByEventId(
-    eventId: number,
+    eventId: number | string,
   ): Promise<WorkshopEntity[]> {
+    eventId = isNumber(eventId) ? eventId : Number(eventId);
     const now = new Date();
     return await this.workshopRepo.find({
       where: { event_id: eventId, start_at: MoreThan(now) },
@@ -49,7 +51,7 @@ export class WorkshopService {
   }
 
   public async getActiveWorkshopsByEventId(
-    eventId: number,
+    eventId: number | string,
   ): Promise<ActiveWorkShopsResponseDTO> {
     const event: EventEntity = await this.eventService.findOneByEventId(
       eventId,
@@ -69,7 +71,9 @@ export class WorkshopService {
     return result;
   }
 
-  public async getSingleWorkshopInfo(id: number): Promise<WorkshopInfoDTO> {
+  public async getSingleWorkshopInfo(
+    id: number | string,
+  ): Promise<WorkshopInfoDTO> {
     const workshop: WorkshopEntity = await this.findWorkshopById(id);
     if (!workshop) {
       throw new NotFoundException(`Workshop not found by id = ${id}`);
