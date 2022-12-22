@@ -1,4 +1,4 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, Index } from 'typeorm';
 import { BaseTimeEntity } from './base.entity';
 
 @Entity({ name: 'workshops' })
@@ -10,6 +10,7 @@ class WorkshopEntity extends BaseTimeEntity {
   description: string;
 
   @Column({ type: 'int' })
+  @Index()
   event_id: number;
 }
 

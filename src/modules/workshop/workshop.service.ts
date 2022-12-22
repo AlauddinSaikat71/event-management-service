@@ -40,6 +40,7 @@ export class WorkshopService {
     const now = new Date();
     return await this.workshopRepo.find({
       where: { event_id: eventId, start_at: MoreThan(now) },
+      order: { event_id: 'ASC' },
     });
   }
 

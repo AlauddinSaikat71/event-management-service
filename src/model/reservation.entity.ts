@@ -1,4 +1,4 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, Index } from 'typeorm';
 import { BaseEntity } from './base.entity';
 
 @Entity({ name: 'reservations' })
@@ -10,6 +10,7 @@ class ReservationEntity extends BaseEntity {
   email: string;
 
   @Column({ type: 'int' })
+  @Index()
   workshop_id: number;
 }
 export default ReservationEntity;
