@@ -51,6 +51,7 @@ export class EventService {
       },
       skip: (currentPage - 1) * perPage,
       take: perPage,
+      order: { start_at: 'ASC' },
     });
   }
 
